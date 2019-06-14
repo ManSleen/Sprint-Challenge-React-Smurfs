@@ -12,12 +12,10 @@ class Smurfs extends Component {
             console.log(smurf);
             return (
               <Smurf
+                setUpdateForm={this.props.setUpdateForm}
+                updateSmurf={this.props.updateSmurf}
                 deleteSmurf={this.props.deleteSmurf}
-                name={smurf.name}
-                id={smurf.id}
-                age={smurf.age}
-                height={smurf.height}
-                imgUrl={smurf.imgUrl}
+                smurf={smurf}
                 key={smurf.id}
               />
             );

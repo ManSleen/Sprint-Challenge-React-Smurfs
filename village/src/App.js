@@ -6,12 +6,14 @@ import "./App.css";
 import SmurfForm from "./components/SmurfForm";
 import Smurfs from "./components/Smurfs";
 import NavBar from "./components/NavBar";
+import UpdateSmurfForm from "./components/UpdateSmurfForm";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smurfs: []
+      smurfs: [],
+      activeSmurf: null
     };
   }
 
@@ -59,15 +61,43 @@ class App extends Component {
       });
   };
 
+  updateSmurf = updatedSmurf => {
+    console.log(updatedSmurf);
+    axios
+      .put(`http://localhost:3333/smurfs/${updatedSmurf.id}`, updatedSmurf)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          smurfs: res.data
+        });
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  setUpdateForm = (e, smurf) => {
+    e.preventDefault();
+
+    this.setState({
+      activeSmurf: smurf
+    });
+    this.props.history.push("/edit-smurf-form");
+  };
+
   render() {
     return (
       <div className="App">
         <NavBar />
         <Route
+          exact
           path="/"
           render={props => (
             <Smurfs
               {...props}
+              setUpdateForm={this.setUpdateForm}
+              updateSmurf={this.updateSmurf}
               deleteSmurf={this.deleteSmurf}
               smurfs={this.state.smurfs}
             />
@@ -79,6 +109,19 @@ class App extends Component {
             <SmurfForm
               {...props}
               addSmurf={this.addSmurf}
+              smurfs={this.state.smurfs}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/edit-smurf-form"
+          render={props => (
+            <UpdateSmurfForm
+              {...props}
+              activeSmurf={this.state.activeSmurf}
+              setUpdateForm={this.setUpdateForm}
+              updateSmurf={this.updateSmurf}
               smurfs={this.state.smurfs}
             />
           )}

@@ -2,27 +2,32 @@ import React from "react";
 import "../App.css";
 
 const Smurf = props => {
-  console.log(props);
+  console.log(props.smurf);
   return (
     <div className="Smurf">
       <div className="smurf-card-top">
         <div className="smurf-image">
-          <img src={props.imgUrl} />
+          <img src={props.smurf.imgUrl} />
         </div>
         <div className="smurf-info">
-          <h3>{props.name}</h3>
-          <strong>{props.height} tall</strong>
-          <p>{props.age} smurf years old</p>
+          <h3>{props.smurf.name}</h3>
+          <strong>{props.smurf.height} tall</strong>
+          <p>{props.smurf.age} smurf years old</p>
         </div>
       </div>
       <div className="smurf-card-bottom">
         <div className="edit-delete-container">
-          <div className="edit-button">Edit</div>
           <div
-            onClick={() => props.deleteSmurf(props.id)}
+            onClick={e => props.setUpdateForm(e, props.smurf)}
+            className="edit-button"
+          >
+            <i className="fas fa-edit" />
+          </div>
+          <div
+            onClick={() => props.deleteSmurf(props.smurf.id)}
             className="delete-button"
           >
-            Delete
+            <i className="fas fa-trash-alt" />
           </div>
         </div>
       </div>
