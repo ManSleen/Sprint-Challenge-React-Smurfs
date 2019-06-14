@@ -9,8 +9,10 @@ class Smurfs extends Component {
         <h1>Welcome to Smurf Village</h1>
         <div className="smurfs-container">
           {this.props.smurfs.map(smurf => {
+            console.log(smurf);
             return (
               <Smurf
+                deleteSmurf={this.props.deleteSmurf}
                 name={smurf.name}
                 id={smurf.id}
                 age={smurf.age}

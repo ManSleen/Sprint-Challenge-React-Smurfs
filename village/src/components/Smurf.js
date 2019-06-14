@@ -18,7 +18,12 @@ const Smurf = props => {
       <div className="smurf-card-bottom">
         <div className="edit-delete-container">
           <div className="edit-button">Edit</div>
-          <div className="delete-button">Delete</div>
+          <div
+            onClick={() => props.deleteSmurf(props.id)}
+            className="delete-button"
+          >
+            Delete
+          </div>
         </div>
       </div>
     </div>
