@@ -1,33 +1,19 @@
 import React, { Component } from "react";
 import "../App.css";
 
-class SmurfForm extends Component {
+class UpdateSmurfForm extends Component {
   constructor(props) {
-    if (props) {
-      console.log(props);
-    } else {
-      console.log("Not loaded yet!");
-    }
-
     super(props);
     this.state = {
-      smurf: {
-        id: Date.now(),
-        name: "",
-        age: "",
-        height: "",
-        imgUrl: ""
-      }
+      smurf: this.props.activeSmurf
     };
   }
 
-  addSmurf = event => {
-    event.preventDefault();
-    this.props.addSmurf(this.state);
-
+  updateSmurf = e => {
+    e.preventDefault();
+    this.props.updateSmurf(this.state.smurf);
     this.setState({
       smurf: {
-        id: Date.now(),
         name: "",
         age: "",
         height: "",
@@ -37,43 +23,50 @@ class SmurfForm extends Component {
   };
 
   handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    e.persist();
+    this.setState(prevState => ({
+      smurf: {
+        ...prevState.smurf,
+        [e.target.name]: e.target.value
+      }
+    }));
   };
 
   render() {
+    console.log(this.state.smurf);
     return (
       <div className="SmurfForm">
-        <h2>Add a New Smurf</h2>
-        <form onSubmit={this.addSmurf}>
+        <h2>Edit a Smurf</h2>
+        <form onSubmit={this.updateSmurf}>
           <input
             onChange={this.handleInputChange}
             placeholder="name"
-            value={this.state.name}
+            value={this.state.smurf.name}
             name="name"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="age"
-            value={this.state.age}
+            value={this.state.smurf.age}
             name="age"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="height"
-            value={this.state.height}
+            value={this.state.smurf.height}
             name="height"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="image URL"
-            value={this.state.imgUrl}
+            value={this.state.smurf.imgUrl}
             name="imgUrl"
           />
-          <button type="submit">Create</button>
+          <button type="submit">Update Smurf</button>
         </form>
       </div>
     );
   }
 }
 
-export default SmurfForm;
+export default UpdateSmurfForm;
